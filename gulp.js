@@ -1,73 +1,69 @@
-var gulp = require('gulp');
-const babel = require('gulp-babel');
+var gulp = require("gulp");
+const babel = require("gulp-babel");
 
-gulp.task('default', ['scripts', 'scripts-scorm', 'lint', 'styles'], function () { });
+gulp.task(
+  "default",
+  ["scripts", "scripts-scorm", "lint", "styles"],
+  function () {}
+);
 
-gulp.task('scripts', function () {
-  var concat = require('gulp-concat');
-  var stripDebug = require('gulp-strip-debug');
-  var uglify = require('gulp-uglify');
+gulp.task("scripts", function () {
+  var concat = require("gulp-concat");
+  var stripDebug = require("gulp-strip-debug");
+  var uglify = require("gulp-uglify");
 
-  var files = [
-    'assets/scripts/src/global.js'
-  ];
+  var files = ["assets/scripts/src/global.js"];
 
-  gulp.src(files)
-    .pipe(concat('global.min.js'))
+  gulp
+    .src(files)
+    .pipe(concat("global.min.js"))
     // .pipe(stripDebug())
     // .pipe(uglify())
-    .pipe(gulp.dest('assets/scripts/dist'));
+    .pipe(gulp.dest("assets/scripts/dist"));
 });
 
-gulp.task('lint', function () {
+gulp.task("lint", function () {
   var jshint = require("gulp-jshint");
 
-  var files = [
-    'assets/scripts/src/global.js'
-  ];
+  var files = ["assets/scripts/src/global.js"];
 
-  gulp.src(files)
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'));
+  gulp.src(files).pipe(jshint()).pipe(jshint.reporter("default"));
 });
 
-gulp.task('styles', function () {
-  var concat = require('gulp-concat');
-  var autoprefix = require('gulp-autoprefixer');
-  var minifyCSS = require('gulp-clean-css');
+gulp.task("styles", function () {
+  var concat = require("gulp-concat");
+  var autoprefix = require("gulp-autoprefixer");
+  var minifyCSS = require("gulp-clean-css");
 
-  var files = [
-    'assets/styles/src/fonts.css',
-    'assets/styles/src/global.css',
-    'assets/styles/src/mobile.css'
-  ];
+  var files = ["assets/styles/src/custom.css"];
 
-  gulp.src(files)
-    .pipe(concat('global.min.css'))
-    .pipe(autoprefix('last 4 versions'))
+  gulp
+    .src(files)
+    .pipe(concat("custom.min.css"))
+    .pipe(autoprefix("last 4 versions"))
     .pipe(minifyCSS())
-    .pipe(gulp.dest('assets/styles/dist/'));
+    .pipe(gulp.dest("assets/styles/dist/"));
 });
 
-gulp.task('watch', function () {
-  var watch = require('gulp-watch');
+gulp.task("watch", function () {
+  var watch = require("gulp-watch");
 
-  gulp.watch('assets/scripts/src/*.js', ['scripts']);
-  gulp.watch('assets/styles/src/*.css', ['styles']);
+  gulp.watch("assets/scripts/src/*.js", ["scripts"]);
+  gulp.watch("assets/styles/src/*.css", ["styles"]);
 });
 
-gulp.task('server', ['watch'], function () {
-  var browserSync = require('browser-sync');
+gulp.task("server", ["watch"], function () {
+  var browserSync = require("browser-sync");
 
   var files = [
-    '*.html',
-    'assets/styles/dist/*.css',
-    'assets/scripts/dist/*.js'
+    "*.html",
+    "assets/styles/dist/*.css",
+    "assets/scripts/dist/*.js",
   ];
 
   browserSync.init(files, {
     server: {
-      baseDir: './'
-    }
+      baseDir: "./",
+    },
   });
 });
